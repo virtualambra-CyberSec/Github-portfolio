@@ -13,7 +13,7 @@ This repository documents my learning journey, including:
 - Reflections on what I’ve learned and how I approached problems
 
 ## Current focus
-- CompTIA A+ (Core 2 in progress)
+- CompTIA A+
 - Networking fundamentals
 - Windows & Linux basics
 - Troubleshooting and documentation
