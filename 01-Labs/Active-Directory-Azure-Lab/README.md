@@ -121,7 +121,7 @@ Created users and groups in Active Directory.
 
 Users:
 - Giovanni Lee
-- Jane Doe
+- Jenny B
 - Jhon Doe
 
 Groups:
@@ -134,49 +134,120 @@ Groups:
 
 ---
 
-### 6. File Sharing
+## 6. File Sharing
 
-Created a shared folder on the Domain Controller:
+Created and configured a shared folder on the Domain Controller to simulate a company network resource.
 
+Shared folder:
+
+```
 \\DC1\SHARED_Folder
+```
 
-Configured permissions and tested access from client.
+Configured:
+- Share permissions
+- NTFS permissions
+- Access testing from a domain user account
+
+The shared folder was successfully accessed using the domain user account Giovanni Lee.
 
 ![Shared Folder Access](images/shared-folder-access-test.png)
 
 ---
 
-### 7. Group Policy Drive Mapping
+## 7. Group Policy Drive Mapping
 
-Configured GPO to map a network drive.
+To simulate a real business environment, I created a Group Policy Object (GPO) to automatically map the shared folder as a network drive for domain users.
 
-- Path: \\DC1\SHARED_Folder
+### Creating the Group Policy Object
 
+Created a new GPO called:
 
+```
+Drive Mapping Policy
+```
 
-#### Authentication Issue
-User login initially failed.
-
-- Checked domain membership
-- Verified credentials
-
-ADLab\giovannilee
+![GPO Creation](images/gpo-drive-mapping-creation.png)
 
 ---
 
-#### Group Policy Issue
+### Linking the GPO
 
-Drive mapping did not apply immediately.
+The GPO was linked to the ADLab.local domain so that it could apply to domain users.
 
-Resolved using:
+![GPO Link](images/gpo-drive-mapping-link.png)
+
+---
+
+### Configuring Automatic Drive Mapping
+
+Configured the GPO using Group Policy Management Editor.
+
+The policy automatically maps:
+
+```
+Drive Letter: Z:
+Location: \\DC1\SHARED_Folder
+```
+
+![Drive Mapping Configuration](images/gpo-network-drive-configuration.png)
+
+---
+
+### Verifying Group Policy Application
+
+Logged into Client1 using the domain user account:
+
+```
+ADLab\giovannilee
+```
+
+Verified the applied network drive using:
+
+```powershell
+net use
+```
+
+The mapped drive was successfully assigned:
+
+```
+Z: \\DC1\SHARED_Folder
+```
+
+![Mapped Network Drive Verification](images/mapped-network-drive-verification.png)
+
+---
+
+## 8. Testing and Troubleshooting
+
+During the lab, I encountered and resolved several issues while configuring the domain environment.
+
+### Authentication Troubleshooting
+
+Initial login issues were caused by confusion between local and domain user accounts.
+
+Troubleshooting steps:
+- Verified domain membership
+- Checked user credentials
+- Confirmed the correct login format:
+
+```
+ADLab\giovannilee
+```
+
+---
+
+### Group Policy Troubleshooting
+
+The drive mapping policy did not apply immediately after configuration.
+
+The issue was resolved by forcing a Group Policy update:
 
 ```powershell
 gpupdate /force
 ```
 
-Confirmed drive was mapped successfully.
-
-![Mapped Drive](images/mapped-network-drive-verification.png)
+After updating the policy, the mapped drive appeared successfully for the domain user.
 
 ---
 
@@ -189,20 +260,20 @@ Confirmed drive was mapped successfully.
 - User and group management
 - Domain joining
 - Group Policy configuration
-- Troubleshooting Windows environments
+- File sharing and permissions
+- Network drive mapping
+- Windows troubleshooting
 
 ---
 
 ## Outcome
 
-Successfully built and configured a working Active Directory environment simulating a real-world IT setup.
+Successfully deployed and configured a functional Active Directory environment simulating a small business IT infrastructure.
 
-This project demonstrates hands-on experience with system administration tasks and troubleshooting commonly performed in entry-level IT support roles.- File sharing and permissions
-- Retried with correct format:
+This project demonstrates hands-on experience with:
+- Identity and access management
+- Windows Server administration
+- User support workflows
+- Troubleshooting domain environments
 
-
-### 8. Testing and Troubleshooting
----
-![Drive Mapping](images/gpo-network-drive-configuration.png)
-
-![GPO Creation](images/gpo-drive-mapping-creation.png)
+These skills are directly applicable to entry-level IT support and system administration roles.
